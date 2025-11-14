@@ -2,7 +2,6 @@
 #include "rclcpp/callback_group.hpp"
 #include "sensor_msgs/msg/point_cloud.hpp"
 #include "sensor_msgs/msg/point_cloud2.hpp"
-#include "sensor_msgs/point_cloud_conversion.hpp"
 #include "utils/json.hpp"
 #include <cv_bridge/cv_bridge.h>
 #include <pcl/registration/icp.h>

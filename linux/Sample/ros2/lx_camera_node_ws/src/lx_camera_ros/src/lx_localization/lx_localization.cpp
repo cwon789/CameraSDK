@@ -589,11 +589,15 @@ LxLocalization::LxLocalization(DcLib *dynamic_lib)
         DcGetBoolValue(handle_, LX_BOOL_ENABLE_2D_STREAM, &is_enable_rgb));
   Check("LX_INT_ALGORITHM_MODE",
         DcGetIntValue(handle_, LX_INT_ALGORITHM_MODE, &int_value));
-  char *algo_ver = "0.0.0";
+  char *algo_ver = nullptr;
   Check("LX_INT_ALGORITHM_MODE",
         DcGetStringValue(handle_, LX_STRING_ALGORITHM_VERSION,
                          &algo_ver)); // 获取当前应用算法版本
-  algo_ver_ = algo_ver;
+  if (algo_ver != nullptr) {
+    algo_ver_ = algo_ver;
+  } else {
+    algo_ver_ = "0.0.0";
+  }
   RCLCPP_INFO(this->get_logger(),
               "rgb:%d,algor:%d,auto_exp:%d,exp_val:%d,visloc_algo_ver:%s",
               is_enable_rgb, int_value.cur_value, is_enable_exp,
