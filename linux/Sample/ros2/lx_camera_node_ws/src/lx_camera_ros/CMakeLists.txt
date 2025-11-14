@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.10...3.18)
 set(CMAKE_CXX_STANDARD 14)
 project(lx_camera_ros)
 
@@ -66,6 +66,7 @@ include_directories(
 )
 #SDK
 include_directories(/opt/Lanxin-MRDVS/include)
+include_directories(${PROJECT_SOURCE_DIR}/../../../../../SDK/include)
 set(LX_LIB_PATH /opt/Lanxin-MRDVS/lib)
 link_directories(${LX_LIB_PATH})
 set(LX_LIB ${LX_LIB_PATH}/libLxCameraApi.so)
@@ -87,12 +88,10 @@ add_executable(${TARGET_NAME}
 				${PROJECT_SOURCE_DIR}/src/lx_camera/lx_camera.cpp 
 				${PROJECT_SOURCE_DIR}/src/lx_camera/lx_camera_node.cpp 
 				${PROJECT_SOURCE_DIR}/src/utils/dynamic_link.cpp)
-# rosidl_target_interfaces(${TARGET_NAME} ${PROJECT_NAME} "rosidl_typesupport_cpp")
-rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} rosidl_typesupport_cpp)
+rosidl_target_interfaces(${TARGET_NAME} ${PROJECT_NAME} "rosidl_typesupport_cpp")
 ament_target_dependencies(${TARGET_NAME} ${dependencies} rosidl_default_runtime )
 target_link_libraries(${TARGET_NAME}
-                      ${PCL_LIBRARIES} 
-					  "${cpp_typesupport_target}")
+                      ${PCL_LIBRARIES})
 install(TARGETS ${TARGET_NAME} EXPORT export_${PROJECT_NAME} DESTINATION lib/${PROJECT_NAME})
 install(FILES ${LX_LIB_PATH}/libLxDataProcess.so ${LX_LIB_PATH}/libLxCameraApi.so DESTINATION lib/)
 
