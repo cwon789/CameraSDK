@@ -444,6 +444,22 @@ void LxCamera::Run() {
       result.x = lao->x;
       result.y = lao->y;
       result.yaw = lao->yaw;
+
+      // Debug: Check if extents array has any non-zero data
+      bool has_extent_data = false;
+      for (int i = 0; i < 100; i++) {  // Check first 100 elements
+        if (lao->extents[i] != 0) {
+          has_extent_data = true;
+          break;
+        }
+      }
+      if (has_extent_data) {
+        RCLCPP_INFO(this->get_logger(),
+                    "Pallet extents data found! First 10 values: %d %d %d %d %d %d %d %d %d %d",
+                    lao->extents[0], lao->extents[1], lao->extents[2], lao->extents[3], lao->extents[4],
+                    lao->extents[5], lao->extents[6], lao->extents[7], lao->extents[8], lao->extents[9]);
+      }
+
       pub_pallet_->publish(result);
       break;
     }
